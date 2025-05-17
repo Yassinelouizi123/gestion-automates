@@ -10,7 +10,7 @@ class SidebarWidget(QWidget):
         super().__init__()
         self.current_button = None
         self.initUI()
-        
+    
     def initUI(self):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(15, 10, 8, 10)  # Reduced right margin to account for scrollbar spacing
@@ -24,7 +24,7 @@ class SidebarWidget(QWidget):
             QScrollArea {
                 background-color: transparent;
                 border: none;
-                padding-right: 12px;  /* Increased from 3mm */
+                padding-right: 12px;
             }
             QScrollBar:vertical {
                 background-color: transparent;
@@ -46,7 +46,7 @@ class SidebarWidget(QWidget):
         
         # Container for menu items
         menu_container = QWidget()
-        menu_container.setObjectName("menu_container")  # Add this line
+        menu_container.setObjectName("menu_container")
         menu_layout = QVBoxLayout(menu_container)
         menu_layout.setContentsMargins(0, 0, 0, 0)
         menu_layout.setSpacing(10)
@@ -57,12 +57,6 @@ class SidebarWidget(QWidget):
             action=lambda: self.set_active_button("Create New Automaton"))
         self.load_btn = automata_management.add_menu_item("Load Automaton from File", 
             action=lambda: self.set_active_button("Load Automaton from File"))
-        self.save_btn = automata_management.add_menu_item("Save Current Automaton", 
-            action=lambda: self.set_active_button("Save Current Automaton"))
-        self.list_btn = automata_management.add_menu_item("List Saved Automata", 
-            action=lambda: self.set_active_button("List Saved Automata"))
-        self.modify_btn = automata_management.add_menu_item("Modify Current Automaton", 
-            action=lambda: self.set_active_button("Modify Current Automaton"))
         self.delete_btn = automata_management.add_menu_item("Delete Saved Automaton File", 
             action=lambda: self.set_active_button("Delete Saved Automaton File"))
         menu_layout.addWidget(automata_management)
@@ -102,7 +96,7 @@ class SidebarWidget(QWidget):
         menu_layout.addWidget(word_operations)
         
         # Other Section
-        other_section = MenuCategory("OTHER")
+        other_section = MenuCategory("VISUALISATION")
         self.visualize_btn = other_section.add_menu_item("Visualize Current Automaton", 
             action=lambda: self.set_active_button("Visualize Current Automaton"))
         menu_layout.addWidget(other_section)
@@ -112,7 +106,6 @@ class SidebarWidget(QWidget):
         layout.addWidget(scroll_area)
         
         self.setLayout(layout)
-        self.set_active_button("Create New Automaton")
     
     def set_active_button(self, button_name):
         # Reset previous button style
@@ -140,9 +133,6 @@ class SidebarWidget(QWidget):
         button_map = {
             "Create New Automaton": self.create_btn,
             "Load Automaton from File": self.load_btn,
-            "Save Current Automaton": self.save_btn,
-            "List Saved Automata": self.list_btn,
-            "Modify Current Automaton": self.modify_btn,
             "Delete Saved Automaton File": self.delete_btn,
             "Check Determinism": self.check_det_btn,
             "Check Completeness": self.check_comp_btn,
@@ -159,10 +149,6 @@ class SidebarWidget(QWidget):
             "Compute Complement": self.complement_btn,
             "Visualize Current Automaton": self.visualize_btn
         }
-        
-        # Add admin buttons if they exist
-        if hasattr(self, 'user_mgmt_btn'):
-            button_map["User Management"] = self.user_mgmt_btn
         
         if button_name in button_map:
             self.current_button = button_map[button_name]
@@ -206,9 +192,8 @@ class SidebarWidget(QWidget):
     
     def get_category_for_button(self, button_name):
         if button_name in [
-            "Create New Automaton", "Load Automaton from File", 
-            "Save Current Automaton", "List Saved Automata",
-            "Modify Current Automaton", "Delete Saved Automaton File"
+            "Create New Automaton", "Load Automaton from File",
+            "Delete Saved Automaton File"
         ]:
             return "management"
         elif button_name in [
@@ -223,17 +208,5 @@ class SidebarWidget(QWidget):
             "Compute Union", "Compute Intersection", "Compute Complement"
         ]:
             return "operations"
-        elif button_name == "User Management":
-            return "administration"
         else:
             return "other"
-    
-    def add_admin_menu_items(self):
-        # Create admin section
-        admin_section = MenuCategory("ADMINISTRATION")
-        self.user_mgmt_btn = admin_section.add_menu_item("User Management", 
-            action=lambda: self.set_active_button("User Management"))
-        
-        # Add to menu layout after OTHER section
-        menu_layout = self.findChild(QWidget, "menu_container").layout()
-        menu_layout.insertWidget(menu_layout.count()-1, admin_section)  # Insert before stretch

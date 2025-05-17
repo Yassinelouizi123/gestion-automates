@@ -1,0 +1,5 @@
+PyQt6
+PyQt6-WebEngine
+passlib
+dataclasses; python_version < "3.7"
+typing; python_version < "3.5"

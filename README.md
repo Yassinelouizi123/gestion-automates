@@ -74,3 +74,5 @@ Notes
 - All automata are saved in JSON format
 
 For any issues or questions, please contact the developer at "louiziyassine003@gmail.com"
+
+

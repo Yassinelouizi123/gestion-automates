@@ -1,6 +1,12 @@
 Automata Manager Application
 =========================
 
+-(code source : https://github.com/Yassinelouizi123/gestion-automates)
+
+-(executable : https://drive.google.com/file/d/1dIvowofUOuiNVf8nbJgeMkPaYlZ5Xn2h/view?usp=sharing )
+
+PS : if you run the .exe it might take 10 or so seconds as it creates the file to save automatons and the user.db
+
 This application allows you to create, visualize, and analyze finite automata, including performing operations like union, intersection, and complement.
 
 Setup Instructions
